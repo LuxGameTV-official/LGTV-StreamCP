@@ -6,9 +6,6 @@ require_once("includes/functions/autoloader.php"); //We includes the Autoloader 
 $setbasics = new basic;
 $setbasics->developer_mode(); //Set the Error Reporting with Config settings
 
-$basicmysql = new basicmysql;
-$basicmysql->connect_mysql(); //Connect to the MySQL Server with PDO 
-
 //was wenn affen gerne einen apfel essen? 
 
 //Test login mask:

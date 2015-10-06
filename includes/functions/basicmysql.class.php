@@ -14,4 +14,9 @@ class basicmysql{
 			//PDO Debug here ^^
 		}
 	}
+	function check_login_data(){
+		$data_check = new basicmysql;
+		$data_chek->connect_mysql();
+		
+	}
 }
