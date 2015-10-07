@@ -24,4 +24,7 @@ class basicmysql{
 		//$pdo->query("")
 		
 	}
+	function create_mysql_structure(){
+		
+	}
 }
