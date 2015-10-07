@@ -6,7 +6,11 @@ class loginsystem{
 			if(empty($_POST['short_loginmask_user']) OR empty($_POST['short_loginmask_password'])){
 				echo"<p class='short_loginmask_error'>Please insert username and passwort!</p>";
 			}else{
-				
+				//Check if username + password is correct.
+				$checklogin = new basicmysql;
+				$user = $_POST['short_loginmask_user'];
+				$passw = $_POST['short_loginmask_password'];
+				$checklogin->check_login_data($user, $passwd);
 			}
 		}else{
 		echo'<form method="POST" action="'.$_SERVER["SCRIPT_NAME"].'">';

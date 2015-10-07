@@ -14,9 +14,14 @@ class basicmysql{
 			//PDO Debug here ^^
 		}
 	}
-	function check_login_data(){
+	function check_login_data($user, $passwd){
 		$data_check = new basicmysql;
-		$data_chek->connect_mysql();
+		$data_check->connect_mysql();
+		//$pdo_query = ""
+		//$pdo->query($pdo->query($pdo_query));
+		/*foreach ($pdo->query($pdo_query) as $pdo_row) {
+		}*/
+		//$pdo->query("")
 		
 	}
 }

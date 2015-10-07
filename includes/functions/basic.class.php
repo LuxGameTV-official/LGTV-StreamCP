@@ -6,7 +6,7 @@ class basic{
     			ini_set('display_errors', '1');
 			}
 			error_reporting(-1);
-			echo"Warning: System is in Developer Mode. All Errors will be displayed.";
+			echo"Warning: System is in Developer Mode. All Errors will be displayed. <br>";
 		}elseif(DEVELOPER_MODE == "TESTRUN"){
 			error_reporting(E_ERROR | E_WARNING | E_PARSE);
 		}elseif(DEVELOPER_MODE == "OFF"){
