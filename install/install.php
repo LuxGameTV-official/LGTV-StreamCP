@@ -3,14 +3,6 @@ if(!defined('SECURITY'))
 	{
 		exit("Sorry, Nope.");
 }
-echo'<html>
-  <head>
-  	<link rel="stylesheet" type="text/css" href="install/style.css">
-    <meta charset="utf-8">
-    <title>Installer</title>
-  </head>
-<body>
-';
 if(isset($_GET['step'])){
 	switch ($_GET['step'])
 	{
@@ -30,6 +22,14 @@ if(isset($_GET['step'])){
 	require_once('step_0.php');
 }
 
+echo'<html>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="install/style.css">
+    <meta charset="utf-8">
+    <title>Installer</title>
+  </head>
+<body>
+';
 echo'</body>
 </html>
 ';
