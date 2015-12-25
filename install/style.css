@@ -39,4 +39,6 @@
 .buttons:active {
 	position: relative;
 	top: 1px;
+}.field_name{
+	display:inline;
 }
