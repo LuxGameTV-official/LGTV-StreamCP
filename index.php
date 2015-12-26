@@ -19,8 +19,8 @@ if(!file_exists('config.php')){
 		
 		if(isset($_SESSION['username'])){
 			print'Welcome '.$_SESSION['username'];
-			$logout = new loginsystem;
-			$logout->logout_button();
+			$loginsys = new loginsystem;
+			$loginsys->logout_button();
 		}else{
 		//Test login mask:
 		$loginmask = new loginsystem;
