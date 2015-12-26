@@ -32,4 +32,25 @@ class basicmysql{
 	function create_mysql_structure(){
 	}
 	}
+	function check_username($username){
+		$check_username = new basicmysql;
+		$pdo = $check_username->connect_mysql();
+		$pdo_query = "SELECT ID, username FROM users WHERE username = ?";
+		$stmt = $pdo->prepare($pdo_query);
+		$stmt->execute(array($username));
+		$rowCount = $stmt->rowCount();
+		if($rowCount != 0){
+			//Username avaiable = a
+			//Username unavaiable = ua
+			return("ua");
+		}else{
+			return("a");
+		}
+	}function createAccount($username, $email, $pwhash){
+		$createAccount = new basicmysql;
+		$pdo = $createAccount->connect_mysql();
+		$pdo_query = "INSERT INTO users (username, email, pw_hash, activated) VALUES (?, ?, ?, ?)";
+		$stmt = $pdo->prepare($pdo_query);
+		$stmt->execute(array($username, $email, $pwhash, "0"));
+	}
 }

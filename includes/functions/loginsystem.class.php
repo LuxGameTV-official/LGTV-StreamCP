@@ -35,12 +35,56 @@ class loginsystem{
 		echo'</form>';
 	}
 	function regist_form(){
+		if(isset($_POST['registform_submit'])){
+			//Its Shorter ;)
+			$regist_user = $_POST['registform_user'];
+			$regist_email = $_POST['registform_email'];
+			$regist_password = $_POST['registform_password'];
+			$regist_password_repeat = $_POST['registform_password_repeat'];
+			
+			//Check if all Fields was filled in
+			if(empty($_POST['registform_user']) OR empty($_POST['registform_email']) OR empty($_POST['registform_password']) OR empty($_POST['registform_password_repeat'])){
+				header("Location: ?insertempty");
+			}else{
+				if(!preg_match('/[0-9a-zA-Z-_.]/', $regist_user)){
+					header("Location: ?usernameincorrect");
+				}else{
+				//Check if Email is valid
+				if (!filter_var($regist_email, FILTER_VALIDATE_EMAIL)) {
+					header("Location: ?emailincorrect");
+				}else{
+					//Check if Passwort and Passwort Repeat matchs
+					if($regist_password != $regist_password_repeat){
+						header("Location: ?pwunmatch");
+					}else{
+						//Check if password contains numbers and is lenghter then 7}
+						if(strlen($regist_password) < 8 OR !preg_match('/[0-9]/', $regist_password)){
+							header("Location: ?pwtoobad");
+						}else{
+							if(!preg_match('/[0-9a-zA-Z-_.]/', $regist_password)){
+								header("Location: ?passwordillegal");
+							}else{
+							$accountcreate = new basicmysql;
+							if($accountcreate->check_username($regist_user) == "ua"){
+								header("Location: ?usernameua");
+							}else{
+								$regist_pwhash = password_hash($regist_password, PASSWORD_DEFAULT);
+								$accountcreate->createAccount($regist_user, $regist_email, $regist_pwhash);
+							}
+						}
+						}
+					}
+				}
+			}
+		}
+		}else{
 		print'<form method="POST" action="'.$_SERVER["SCRIPT_NAME"].'">';
 		print'<p class="registform_text"><input class="registform_field" name="registform_user" placeholder="Username" type="text"></p>';
 		print'<p class="registform_text"><input class="registform_field" name="registform_email" placeholder="E-Mail Adress" type="text"></p>';
-		print'<p class="registform_text"><input class="registform_field" name="registform_password" placeholder="Password" type="text"></p>';
-		print'<p class="registform_text"><input class="registform_field" name="registform_password_repeat" placeholder="Repeat Password" type="text"></p>';
+		print'<p class="registform_text"><input class="registform_field" name="registform_password" placeholder="Password" type="password"></p>';
+		print'<p class="registform_text"><input class="registform_field" name="registform_password_repeat" placeholder="Repeat Password" type="password"></p>';
 		print'<input class="registform_submit" name="registform_submit" value="Regist!" type="submit"></p>';
 		print'</form>';
+		}
 	}
 }
