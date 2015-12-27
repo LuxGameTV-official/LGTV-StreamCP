@@ -31,8 +31,7 @@ class basicmysql{
 		}
 	function create_mysql_structure(){
 	}
-	}
-	function check_username($username){
+	}function check_username($username){
 		$check_username = new basicmysql;
 		$pdo = $check_username->connect_mysql();
 		$pdo_query = "SELECT ID, username FROM users WHERE username = ?";
@@ -47,10 +46,44 @@ class basicmysql{
 			return("a");
 		}
 	}function createAccount($username, $email, $pwhash){
+		$randomkey = new basic;
+		$key = $randomkey->random(30);
 		$createAccount = new basicmysql;
 		$pdo = $createAccount->connect_mysql();
-		$pdo_query = "INSERT INTO users (username, email, pw_hash, activated) VALUES (?, ?, ?, ?)";
+		$pdo_query = "INSERT INTO users (username, email, pw_hash, activated, activatekey) VALUES (?, ?, ?, ?, ?)";
 		$stmt = $pdo->prepare($pdo_query);
-		$stmt->execute(array($username, $email, $pwhash, "0"));
+		$stmt->execute(array($username, $email, $pwhash, "0", $key));
+		//Send activation Email:
+		$betreff = "Activation Mail";
+		$message = 'Hello! You must activate your Account by clicking on the following link: <br> '.SITE_URL.'/account_activate.php?key='.$key;
+		mail($email, $betreff, $message, 'From: '.SENDER.' <'.SENDERMAIL.'>');
+	}	function check_mail($mail){
+		$check_mail = new basicmysql;
+		$pdo = $check_mail->connect_mysql();
+		$pdo_query = "SELECT ID, username FROM users WHERE email = ?";
+		$stmt = $pdo->prepare($pdo_query);
+		$stmt->execute(array($mail));
+		$rowCount = $stmt->rowCount();
+		if($rowCount != 0){
+			return("ua");
+		}else{
+			return("a");
+		}
+	}function activate($key){
+		$activate = new basicmysql;
+		$pdo = $activate->connect_mysql();
+		$pdo_query = "SELECT ID, activated, activatekey FROM users WHERE activatekey = ?";
+		$stmt = $pdo->prepare($pdo_query);
+		$stmt->execute(array($key));
+		$rowCount = $stmt->rowCount();
+		if($rowCount = 0){
+			//us = unsucessfull
+			return("us");
+		}else{
+			$pdo_query = "UPDATE users SET activated = '1', activatekey = '0' WHERE activatekey = ?";
+			$stmt = $pdo->prepare($pdo_query);
+			$stmt->execute(array($key));
+			return("s");
+		}
 	}
 }

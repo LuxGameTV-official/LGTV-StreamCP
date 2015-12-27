@@ -25,6 +25,7 @@ if(!file_exists('config.php')){
 		//Test login mask:
 		$loginmask = new loginsystem;
 		$loginmask->short_login();
+
 		}
 	}else{
 		echo'Error: Setting for IS_INSTALLED in Config File isn\'t correct: '.IS_INSTALLED;

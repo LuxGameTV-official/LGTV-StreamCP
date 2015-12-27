@@ -68,9 +68,14 @@ class loginsystem{
 							if($accountcreate->check_username($regist_user) == "ua"){
 								header("Location: ?usernameua");
 							}else{
+								if($accountcreate->check_mail($regist_email) == "ua"){
+									header("Location: ?mailua");
+								}else{
 								$regist_pwhash = password_hash($regist_password, PASSWORD_DEFAULT);
 								$accountcreate->createAccount($regist_user, $regist_email, $regist_pwhash);
+								print("Account sucessfully created.");
 							}
+						}
 						}
 						}
 					}
@@ -78,6 +83,23 @@ class loginsystem{
 			}
 		}
 		}else{
+		if(isset($_GET['insertempty'])){
+			print("Error: Please fill in ALL fields!");
+		}else if(isset($_GET['usernameincorrect'])){
+			print("Error: Username contains illegal chars.");
+		}else if(isset($_GET['emailincorrect'])){
+			print("Error: E-Mail Adress is not valid.");
+		}else if(isset($_GET['pwunmatch'])){
+			print("Error: Password and Password-Repeat are not equal.");
+		}else if(isset($_GET['pwtoobad'])){
+			print("Error: Password not strong enough. Passwords must contain at least 1 number and must be longer then 7 chars.");
+		}else if(isset($_GET['passwordillegal'])){
+			print("Error: You Password contains illegal chars.");
+		}else if(isset($_GET['usernameua'])){
+			print("Error: You username is already used.");
+		}else if(isset($_GET['mailua'])){
+			print("Error: You e-mail is already used.");
+		}
 		print'<form method="POST" action="'.$_SERVER["SCRIPT_NAME"].'">';
 		print'<p class="registform_text"><input class="registform_field" name="registform_user" placeholder="Username" type="text"></p>';
 		print'<p class="registform_text"><input class="registform_field" name="registform_email" placeholder="E-Mail Adress" type="text"></p>';

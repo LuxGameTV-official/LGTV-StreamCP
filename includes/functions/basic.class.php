@@ -16,4 +16,19 @@ class basic{
 		}
 	
 	}
+	function random($length){
+		$pool1 = range('A', 'Z');
+		$pool2 = range('a', 'z');
+		$pool3 = range('0', '9');
+		$pool = array_merge($pool1, $pool2, $pool3);
+		for($i = 1; $i <= $length+1; $i++){
+			if(!isset($randoms)){
+				$randoms = "";
+			}else{
+				$randomz = mt_rand(0, count($pool));
+				$randoms = $randoms.$pool[$randomz];
+			}
+		}
+		return($randoms);
+	}
 }
